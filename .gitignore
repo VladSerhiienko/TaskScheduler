@@ -5,3 +5,4 @@ Scheduler/Docs
 *.suo
 *.rej
 *.orig
+build_*/

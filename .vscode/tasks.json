@@ -31,6 +31,133 @@
             "type": "shell",
             "command": "pushd Bin/ && ./TaskSchedulerTests && popd",
             "problemMatcher": []
+        },
+        
+        {
+            "label": "CMake/TaskScheduler(Windows/VS2017)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-G",
+                "\"'Visual Studio 15 2017 Win64'\"",
+                "-B${workspaceFolder}/build_windows_amd64_msvc",
+                "-H${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "CMake/TaskScheduler(Linux/Makefile/GNU)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-H.", "-Bbuild_linux_x86_64_gnu"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "CMake/TaskScheduler(Linux/Makefile/Clang)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-H.", "-Bbuild_linux_x86_64_clang",
+                "-DCMAKE_C_COMPILER=/usr/bin/clang-5.0",
+                "-DCMAKE_CXX_COMPILER=/usr/bin/clang++-5.0",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "CMake/TaskScheduler(Darwin/Makefile/AppleClang)",
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-H.", "-Bbuild_darwin_x86_64_appleclang",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Make/TaskScheduler(Windows/VS2017/Debug)",
+            "type": "shell",
+            "command": "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/MSBuild/15.0/Bin/MSBuild.exe",
+            "args": [
+                "${workspaceFolder}/build_windows_amd64_msvc/TaskScheduler.sln",
+                "/m",
+                "/nologo",
+                "/verbosity:normal", // "enum": ["quiet", "minimal", "normal", "detailed", "diagnostic"] 
+                "/p:Configuration=Debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/build_windows_amd64_msvc"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [
+                "CMake/TaskScheduler(Windows/VS2017)"
+            ]
+        },
+        {
+            "label": "Make/TaskScheduler(Darwin/Makefile/AppleClang)",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/build_darwin_x86_64_appleclang"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [ "CMake/TaskScheduler(Darwin/Makefile/AppleClang)"]
+        },
+        {
+            "label": "Make/TaskScheduler(Linux/Makefile/GNU)",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/build_linux_x86_64_gnu"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [ "CMake/TaskScheduler(Linux/Makefile/GNU)"]
+        },
+        {
+            "label": "Make/TaskScheduler(Linux/Makefile/Clang)",
+            "type": "shell",
+            "command": "make",
+            "options": {
+                "cwd": "${workspaceFolder}/build_linux_x86_64_clang"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "dependsOn": [ "CMake/TaskScheduler(Linux/Makefile/Clang)"]
         }
     ]
 }
