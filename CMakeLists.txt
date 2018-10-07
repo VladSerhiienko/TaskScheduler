@@ -18,6 +18,24 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_DEBUG -D_UNICODE=1 -DUNICODE=1")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -D_UNICODE=1 -DUNICODE=1")
 
+if (UNIX AND APPLE)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -D_XOPEN_SOURCE=600 -D_DARWIN_C_SOURCE=1")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -D_XOPEN_SOURCE=600 -D_DARWIN_C_SOURCE=1")
+endif()
+
+if (NOT MSVC)
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DMT_UNICODE")
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DMT_UNICODE")
+endif()
+
+if (UNIX)
+add_definitions("-rdynamic")
+endif()
+
+if (UNIX AND APPLE)
+add_definitions("-Wno-invalid-offsetof -Wno-deprecated-declarations -fno-omit-frame-pointer")
+endif()
+
 if(MSVC)
     # Only for 32-bit builds 
     # add_definitions(/arch:SSE2)
@@ -84,7 +102,11 @@ else()
         ${Platform_scopes_headers}
         ${Platform_headers}
         ${Platform_sources}
-   )
+    )
+    target_link_libraries(
+       TaskScheduler
+       pthread
+    )
     target_include_directories(
         TaskScheduler
         PUBLIC
