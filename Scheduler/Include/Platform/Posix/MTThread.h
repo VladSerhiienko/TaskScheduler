@@ -314,8 +314,10 @@ namespace MT
 #ifdef MT_INSTRUMENTED_BUILD
 		static void SetThreadName(const char* threadName)
 		{
+#if !MT_PLATFORM_OSX
 			pthread_t callThread = pthread_self();
 			pthread_setname_np(callThread, threadName);
+#endif
 		}
 #endif
 
